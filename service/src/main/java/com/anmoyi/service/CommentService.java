@@ -9,5 +9,5 @@ public interface CommentService {
     void  addComment(int userId, String content, List<String> urls);
 
 
-    List<CommentVO> getCommentList(int productId);
+    List<CommentVO> getCommentList(int productId, int pageNum);
 }

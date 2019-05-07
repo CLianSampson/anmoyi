@@ -61,9 +61,12 @@ public class CommentServiceImpl implements CommentService{
 
 
     @Override
-    public List<CommentVO> getCommentList(int productId) {
+    public List<CommentVO> getCommentList(int productId , int pageNum) {
 
-        List<Comment> list = commentMapper.getCommentList(productId);
+
+        int frommSize = Const.PAGE_SIZE * (pageNum - 1) ;
+        int toSzie = Const.PAGE_SIZE * pageNum ;
+        List<Comment> list = commentMapper.getCommentList(productId, frommSize, toSzie);
 
         if (list.isEmpty()){
             return null;

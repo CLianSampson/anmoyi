@@ -17,6 +17,8 @@ public class Const {
 
 
 
+    public static final int PAGE_SIZE = 10;// 默认一页大小
+
     public static final int SEX_MAN = 1;  //不是管理员
     public static final int SEX_WOMAN = 2;  //是管理员
 

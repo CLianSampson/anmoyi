@@ -1,6 +1,7 @@
 package com.anmoyi.model.dao;
 
 import com.anmoyi.model.po.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
 
 
-    List<Comment>  getCommentList(int productId);
+    List<Comment>  getCommentList(@Param("productId") int productId, @Param("fromSize") int fromSize, @Param("toSize") int toSize);
 }

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class UseTimeController extends BaseController {
@@ -93,7 +94,6 @@ public class UseTimeController extends BaseController {
         UseTime useTime = new UseTime();
 
         useTime.setUseTime(useTimeAO.getTime());
-        useTime.setUserId(useTime.getUserId());
         useTime.setUserId(user.getId());
         useTime.setCreateTime(new Date());
 
@@ -159,16 +159,9 @@ public class UseTimeController extends BaseController {
         }
 
 
-        UseTime useTime = new UseTime();
+        List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(),useTimeListAO.getTime());
 
-        useTime.setUseTime(useTimeAO.getTime());
-        useTime.setUserId(useTime.getUserId());
-        useTime.setUserId(user.getId());
-        useTime.setCreateTime(new Date());
-
-        useTimeService.addUseTime(useTime);
-
-        return responseToClient(AppError.APP_OK);
+        return responseToClientWithData(AppError.APP_OK,returnList);
 
     }
 

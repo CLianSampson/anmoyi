@@ -8,6 +8,7 @@ import com.anmoyi.service.CommentService;
 import com.anmoyi.service.UserService;
 import com.anmoyi.service.vo.CommentVO;
 import com.anmoyi.web.ao.CommentAO;
+import com.anmoyi.web.ao.CommentListAO;
 import com.anmoyi.web.ao.LoginAO;
 import com.anmoyi.web.decrypt.XcxPhone;
 import org.slf4j.Logger;
@@ -69,9 +70,6 @@ public class CommentController extends BaseController {
         }
 
 
-        if (null != commentAO.getAvatarUrlArry()){
-
-        }
 
         String token = packet.getToken();
         String phone = null;
@@ -111,6 +109,32 @@ public class CommentController extends BaseController {
     @PostMapping(value = "/getCommentList")
     public String getCommentList(@RequestBody String requestString){
         logger.info("获取评论列表");
+
+        Packet packet = null;
+
+        try {
+            packet = JSON.parseObject(requestString, Packet.class);
+        } catch (Exception e) {
+            logger.error(" 获取评论列表参数异常\n" + e);
+            return responseToClient(AppError.APP_JSON_INVALID_ERROR);
+        }
+
+
+        CommentListAO commentListAO = null;
+        try {
+            //packet.getData() 为jsonobject
+            commentListAO = JSON.parseObject(packet.getData().toString(), CommentListAO.class);
+        } catch (Exception e) {
+            logger.error(" 获取评论列表参数异常",  e);
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
+
+
+        if (commentListAO.getPageNum() < 1){
+            logger.error(" 获取评论列表参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
 
         List<CommentVO> list = commentService.getCommentList(Const.AN_MO_YI_ID);
 
