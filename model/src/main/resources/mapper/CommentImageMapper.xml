@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anmoyi.model.dao.CommentImageMapper">
+  <resultMap id="BaseResultMap" type="com.anmoyi.model.po.CommentImage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="commentId" jdbcType="INTEGER" property="commentId" />
+    <result column="imageUrl" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, commentId, imageUrl, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment_image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment_image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.anmoyi.model.po.CommentImage">
+    insert into comment_image (id, commentId, imageUrl, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.anmoyi.model.po.CommentImage">
+    insert into comment_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="commentId != null">
+        commentId,
+      </if>
+      <if test="imageUrl != null">
+        imageUrl,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null">
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.anmoyi.model.po.CommentImage">
+    update comment_image
+    <set>
+      <if test="commentId != null">
+        commentId = #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="imageUrl != null">
+        imageUrl = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.anmoyi.model.po.CommentImage">
+    update comment_image
+    set commentId = #{commentId,jdbcType=INTEGER},
+      imageUrl = #{imageUrl,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getImageUrls" parameterType="java.lang.Integer" resultType="com.anmoyi.model.po.CommentImage">
+    select
+    <include refid="Base_Column_List" />
+    from comment_image
+    where commentId = #{commentId}
+  </select>
+
+</mapper>

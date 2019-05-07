@@ -1,0 +1,45 @@
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /anmoyi  #由于eureka该配置不起作用
+
+
+
+spring:
+  application:
+    #当前应用名称
+    name: anmoyi
+  profiles:
+    include: model
+
+
+  output:
+    ansi:
+      enabled: always  #控制台彩色输出
+
+
+
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.ticket.model.po
+
+#pagehelper分页插件
+#pagehelper:
+#    helperDialect: mysql
+#    reasonable: true
+#    supportMethodsArguments: true
+#    params: count=countSql
+
+
+#=========== 日志配置·简易（spring boot已经集成logback日志）=========
+logging:
+  config: classpath:logback-spring.xml
+
+#输出系统日志
+debug: true
+
+
+
+
