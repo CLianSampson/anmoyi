@@ -136,7 +136,7 @@ public class CommentController extends BaseController {
             return responseToClient(AppError.APP_ARGS_ERROR);
         }
 
-        List<CommentVO> list = commentService.getCommentList(Const.AN_MO_YI_ID);
+        List<CommentVO> list = commentService.getCommentList(Const.AN_MO_YI_ID, commentListAO.getPageNum());
 
         return responseToClientWithData(AppError.APP_OK,list);
 
