@@ -81,9 +81,9 @@
   </update>
 
 
-  <select id="getImageUrls" parameterType="java.lang.Integer" resultType="com.anmoyi.model.po.CommentImage">
+  <select id="getImageUrls" parameterType="java.lang.Integer" resultType="java.lang.String">
     select
-    <include refid="Base_Column_List" />
+    imageUrl
     from comment_image
     where commentId = #{commentId}
   </select>

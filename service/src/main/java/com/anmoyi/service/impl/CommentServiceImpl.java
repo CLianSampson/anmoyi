@@ -3,8 +3,10 @@ package com.anmoyi.service.impl;
 import com.anmoyi.common.Const;
 import com.anmoyi.model.dao.CommentImageMapper;
 import com.anmoyi.model.dao.CommentMapper;
+import com.anmoyi.model.dao.UserMapper;
 import com.anmoyi.model.po.Comment;
 import com.anmoyi.model.po.CommentImage;
+import com.anmoyi.model.po.User;
 import com.anmoyi.service.CommentService;
 import com.anmoyi.service.vo.CommentVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private CommentImageMapper imageMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Transactional
     @Override
@@ -77,6 +82,15 @@ public class CommentServiceImpl implements CommentService{
         for (Comment temp : list) {
             CommentVO commentVO = new CommentVO();
             commentVO.setComment(temp);
+
+
+
+            //用户信息
+            User user = userMapper.selectByPrimaryKey(temp.getUserId());
+            //token不返回给前端
+            user.setToken(null);
+            commentVO.setUser(user);
+
 
             List<String> urls = imageMapper.getImageUrls(temp.getId());
             if (!urls.isEmpty()){

@@ -20,12 +20,16 @@ public abstract class BaseController {
     @Autowired
     private UserService userService;
 
+    protected String token;
+
     protected String responseToClient(AppError appError){
         Packet rtvPacket = new Packet();
         rtvPacket.setCode(appError.getCode());
         //rtvPacket.setData(appError.getMessage());
 
         rtvPacket.setMessage(appError.getMessage());
+
+        rtvPacket.setToken(token);
 
 //        PrintWriterUtil.writeResultToClient(response, JSON.toJSON(rtvPacket).toString());
 
@@ -39,6 +43,8 @@ public abstract class BaseController {
         rtvPacket.setData(data);
 
         rtvPacket.setMessage(AppError.APP_OK.getMessage());
+
+        rtvPacket.setToken(token);
 
 //        PrintWriterUtil.writeResultToClient(response, JSON.toJSON(rtvPacket).toString());
 

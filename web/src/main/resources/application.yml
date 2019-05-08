@@ -3,7 +3,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /anmoyi  #由于eureka该配置不起作用
+    context-path: /xcx  #由于eureka该配置不起作用
 
 
 

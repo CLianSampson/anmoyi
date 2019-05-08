@@ -2,11 +2,11 @@
 spring:
   datasource:
       name: yxwl
-      url: jdbc:mysql://127.0.0.1:3306/yxwl?useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://127.0.0.1:3306/anmoyi?useUnicode=true&characterEncoding=UTF-8
 
       username: root
-#      password: 1234567
-      password: Yxwl2019
+      password: 1234567
+#      password: Yxwl2019
 
 
 

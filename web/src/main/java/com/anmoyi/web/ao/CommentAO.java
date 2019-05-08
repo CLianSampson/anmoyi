@@ -6,7 +6,7 @@ public class CommentAO {
 
     private String content;
 
-    private List<String> avatarUrlArry;
+    private List<String> urls;
 
 
     public String getContent() {
@@ -17,13 +17,11 @@ public class CommentAO {
         this.content = content;
     }
 
-    public List<String> getAvatarUrlArry() {
-        return avatarUrlArry;
+    public List<String> getUrls() {
+        return urls;
     }
 
-    public void setAvatarUrlArry(List<String> avatarUrlArry) {
-        this.avatarUrlArry = avatarUrlArry;
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
     }
-
-
 }

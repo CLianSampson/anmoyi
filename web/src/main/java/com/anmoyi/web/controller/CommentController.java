@@ -9,16 +9,18 @@ import com.anmoyi.service.UserService;
 import com.anmoyi.service.vo.CommentVO;
 import com.anmoyi.web.ao.CommentAO;
 import com.anmoyi.web.ao.CommentListAO;
-import com.anmoyi.web.ao.LoginAO;
-import com.anmoyi.web.decrypt.XcxPhone;
+import com.anmoyi.web.dto.UploadPictureDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -40,15 +42,17 @@ public class CommentController extends BaseController {
      */
     @PostMapping(value = "/comment")
     public String comment(@RequestBody String requestString){
-        logger.info("登陆");
+        logger.info("评论参数");
 
+
+        logger.info(requestString);
 
         Packet packet = null;
 
         try {
             packet = JSON.parseObject(requestString, Packet.class);
         } catch (Exception e) {
-            logger.error("登陆参数异常\n" + e);
+            logger.error("评论参数异常\n" + e);
             return responseToClient(AppError.APP_JSON_INVALID_ERROR);
         }
 
@@ -58,14 +62,14 @@ public class CommentController extends BaseController {
             //packet.getData() 为jsonobject
             commentAO = JSON.parseObject(packet.getData().toString(), CommentAO.class);
         } catch (Exception e) {
-            logger.error("登陆参数异常",  e);
+            logger.error("评论参数异常",  e);
             return responseToClient(AppError.APP_ARGS_ERROR);
         }
 
 
 
         if (StringUtil.isNullOrBlank(commentAO.getContent())){
-            logger.error("登陆参数异常");
+            logger.error("评论参数异常");
             return responseToClient(AppError.APP_ARGS_ERROR);
         }
 
@@ -76,19 +80,21 @@ public class CommentController extends BaseController {
         try {
              phone = TokenUtil.getEmail(token);
         } catch (TokenException e) {
-            logger.error("登陆参数异常",e);
+            logger.error("评论参数异常",e);
             return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
         }
 
         User user = userService.getByPhone(phone);
         if (null == user){
-            logger.error("登陆参数异常");
+            logger.error("评论参数异常");
             return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
         }
 
+        this.token = user.getToken();
 
-        if (null != commentAO.getAvatarUrlArry()){
-            commentService.addComment(user.getId(),commentAO.getContent(),commentAO.getAvatarUrlArry());
+
+        if (null != commentAO.getUrls()){
+            commentService.addComment(user.getId(),commentAO.getContent(),commentAO.getUrls());
         }else {
             commentService.addComment(user.getId(),commentAO.getContent(),null);
         }
@@ -99,6 +105,78 @@ public class CommentController extends BaseController {
     }
 
 
+    /**
+     * 上传评论图片
+     * @param multipartFile
+     * @param
+     * @return
+     * @throws IOException
+     */
+    @PostMapping(value="/uploadImage")
+    public String uploadHeadPicture(@RequestParam("file") MultipartFile multipartFile, @RequestHeader("token") String token) throws IOException {
+
+        String phone = null;
+        try {
+            phone = TokenUtil.getEmail(token);
+        } catch (TokenException e) {
+            logger.error("上传评论图片参数异常",e);
+            return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
+        }
+
+        User user = userService.getByPhone(phone);
+        if (null == user){
+            logger.error("上传评论图片参数异常");
+            return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
+        }
+
+        this.token = user.getToken();
+
+        logger.info("用户信息是:");
+        logger.info(user.toString());
+
+
+        String fileName = UUID.randomUUID() + this.getExtension(multipartFile.getOriginalFilename());
+
+        long fileLength = multipartFile.getSize();
+        if( fileLength > 2*1024*1024 ){
+            return "size error";
+        }
+
+
+        String path = Const.UPLOAD_FILE_PATH;
+
+        FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(path + File.separator + fileName));
+        byte[] bs = new byte[1024];
+        int len;
+        while ((len = fileInputStream.read(bs)) != -1) {
+            bos.write(bs, 0, len);
+        }
+        bos.flush();
+        bos.close();
+
+
+        UploadPictureDTO uploadPictureDTO = new UploadPictureDTO();
+        uploadPictureDTO.setIamgeUrl(File.separator + fileName);
+
+        return responseToClientWithData(AppError.APP_OK, uploadPictureDTO);
+
+    }
+
+
+    /**
+     *
+     * @param file
+     * @return .txt
+     */
+    public String getExtension(String file) {
+        String extension = null;
+        int i = file.lastIndexOf(".");
+        if (i > 0 && i < file.length() - 1) {
+            extension = file.substring(i).toLowerCase();
+        }
+        return extension;
+    }
 
 
     /**
