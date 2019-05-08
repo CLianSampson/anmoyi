@@ -50,16 +50,17 @@ public class CommentServiceImpl implements CommentService{
             return;
         }
 
-
+        //已设置插入并获取主键
         int commemtId = comment.getId();
 
         for ( String temp: urls) {
-            CommentImage commentImage = new CommentImage();
-            commentImage.setCommentId(commemtId);
-            commentImage.setImageUrl(temp);
-            commentImage.setCreateTime(new Date());
 
-            imageMapper.insertSelective(commentImage);
+            CommentImage commentImage = imageMapper.getBymageUrl(temp);
+
+            commentImage.setCommentId(commemtId);
+            commentImage.setUpdateTime(new Date());
+
+            imageMapper.updateByPrimaryKeySelective(commentImage);
         }
 
     }

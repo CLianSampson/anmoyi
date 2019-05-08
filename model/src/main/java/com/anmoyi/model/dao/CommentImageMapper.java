@@ -19,4 +19,7 @@ public interface CommentImageMapper {
 
 
     List<String> getImageUrls(int commentId);
+
+    CommentImage getBymageUrl(String imageUrl);
+
 }

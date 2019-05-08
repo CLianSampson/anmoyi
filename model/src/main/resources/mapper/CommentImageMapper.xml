@@ -3,12 +3,14 @@
 <mapper namespace="com.anmoyi.model.dao.CommentImageMapper">
   <resultMap id="BaseResultMap" type="com.anmoyi.model.po.CommentImage">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="commentId" jdbcType="INTEGER" property="commentId" />
     <result column="imageUrl" jdbcType="VARCHAR" property="imageUrl" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, commentId, imageUrl, createTime
+    id, userId, commentId, imageUrl, createTime, updateTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,16 +23,19 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.anmoyi.model.po.CommentImage">
-    insert into comment_image (id, commentId, imageUrl, 
-      createTime)
-    values (#{id,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into comment_image (id, userId, commentId, imageUrl,
+      createTime,updateTime)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{imageUrl,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP} ,#{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.anmoyi.model.po.CommentImage">
     insert into comment_image
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="userId != null">
+        userId,
       </if>
       <if test="commentId != null">
         commentId,
@@ -41,10 +46,16 @@
       <if test="createTime != null">
         createTime,
       </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="commentId != null">
         #{commentId,jdbcType=INTEGER},
@@ -55,11 +66,17 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.anmoyi.model.po.CommentImage">
     update comment_image
     <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
       <if test="commentId != null">
         commentId = #{commentId,jdbcType=INTEGER},
       </if>
@@ -69,14 +86,20 @@
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.anmoyi.model.po.CommentImage">
     update comment_image
-    set commentId = #{commentId,jdbcType=INTEGER},
+    set
+      userId = #{userId,jdbcType=INTEGER},
+      commentId = #{commentId,jdbcType=INTEGER},
       imageUrl = #{imageUrl,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP}
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -87,5 +110,14 @@
     from comment_image
     where commentId = #{commentId}
   </select>
+
+
+  <select id="getBymageUrl" parameterType="java.lang.String" resultType="com.anmoyi.model.po.CommentImage">
+    select
+    <include refid="Base_Column_List" />
+    from comment_image
+    where imageUrl = #{imageUrl}
+  </select>
+
 
 </mapper>

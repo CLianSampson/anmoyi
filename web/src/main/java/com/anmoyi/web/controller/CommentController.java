@@ -3,7 +3,9 @@ package com.anmoyi.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.anmoyi.common.*;
 import com.anmoyi.common.exception.TokenException;
+import com.anmoyi.model.po.CommentImage;
 import com.anmoyi.model.po.User;
+import com.anmoyi.service.CommentImageService;
 import com.anmoyi.service.CommentService;
 import com.anmoyi.service.UserService;
 import com.anmoyi.service.vo.CommentVO;
@@ -28,12 +30,16 @@ public class CommentController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
 
+
     @Autowired
     private UserService userService;
 
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private CommentImageService commentImageService;
 
     /**
      * 评论
@@ -155,6 +161,17 @@ public class CommentController extends BaseController {
         bos.flush();
         bos.close();
 
+
+
+        //添加上传记录
+        CommentImage commentImage = new CommentImage();
+        commentImage.setUserId(user.getId());
+        //此时还没有评论
+        commentImage.setCommentId(0);
+        commentImage.setImageUrl(File.separator + fileName);
+
+
+        commentImageService.addCommentImage(commentImage);
 
         UploadPictureDTO uploadPictureDTO = new UploadPictureDTO();
         uploadPictureDTO.setIamgeUrl(File.separator + fileName);
