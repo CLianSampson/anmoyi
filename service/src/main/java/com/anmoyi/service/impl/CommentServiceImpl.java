@@ -1,6 +1,7 @@
 package com.anmoyi.service.impl;
 
 import com.anmoyi.common.Const;
+import com.anmoyi.common.exception.ArgsException;
 import com.anmoyi.model.dao.CommentImageMapper;
 import com.anmoyi.model.dao.CommentMapper;
 import com.anmoyi.model.dao.UserMapper;
@@ -32,7 +33,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Transactional
     @Override
-    public void addComment(int userId, String content, List<String> urls) {
+    public void addComment(int userId, String content, List<String> urls) throws ArgsException {
 
         Comment comment = new Comment();
         comment.setContent(content);
@@ -56,6 +57,10 @@ public class CommentServiceImpl implements CommentService{
         for ( String temp: urls) {
 
             CommentImage commentImage = imageMapper.getBymageUrl(temp);
+            if (null == commentImage){
+                throw new ArgsException(ArgsException.IMAGE_URL_ERROR);
+            }
+
 
             commentImage.setCommentId(commemtId);
             commentImage.setUpdateTime(new Date());

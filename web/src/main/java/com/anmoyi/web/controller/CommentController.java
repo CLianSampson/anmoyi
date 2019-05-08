@@ -2,6 +2,7 @@ package com.anmoyi.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.anmoyi.common.*;
+import com.anmoyi.common.exception.ArgsException;
 import com.anmoyi.common.exception.TokenException;
 import com.anmoyi.model.po.CommentImage;
 import com.anmoyi.model.po.User;
@@ -100,9 +101,19 @@ public class CommentController extends BaseController {
 
 
         if (null != commentAO.getUrls()){
-            commentService.addComment(user.getId(),commentAO.getContent(),commentAO.getUrls());
+            try {
+                commentService.addComment(user.getId(),commentAO.getContent(),commentAO.getUrls());
+            } catch (ArgsException e) {
+                logger.error(" 获取评论列表参数异常",  e);
+                return responseToClient(AppError.APP_ARGS_ERROR);
+            }
         }else {
-            commentService.addComment(user.getId(),commentAO.getContent(),null);
+            try {
+                commentService.addComment(user.getId(),commentAO.getContent(),null);
+            } catch (ArgsException e) {
+                logger.error(" 获取评论列表参数异常",  e);
+                return responseToClient(AppError.APP_ARGS_ERROR);
+            }
         }
 
 
