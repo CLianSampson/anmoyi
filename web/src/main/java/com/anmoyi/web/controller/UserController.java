@@ -32,8 +32,9 @@ public class UserController extends BaseController{
      */
     @PostMapping(value = "/login")
     public String login(@RequestBody String requestString){
-        logger.info("登陆");
+        logger.info("登陆参数是:");
 
+        logger.info(requestString);
 
         Packet packet = null;
 

@@ -20,7 +20,8 @@ public class Const {
     public static final int PAGE_SIZE = 10;// 默认一页大小
 
 
-    public static final String UPLOAD_FILE_PATH = "/data/anmoyi";
+
+    public static final String UPLOAD_FILE_PATH = "/anmoyi/uploadImage";
 
 
     public static final int SEX_MAN = 1;  //不是管理员
@@ -29,8 +30,15 @@ public class Const {
     public static final int AN_MO_YI_ID = 1;  //按摩仪id
 
 
+   
 
 
+
+
+//./configure --prefix=/anmoyi/nginx  --with-http_ssl_module
+//
+//
+//cp nginx /anmoyi/nginx/sbin/
 
 
 }

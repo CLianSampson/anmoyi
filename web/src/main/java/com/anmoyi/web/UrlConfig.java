@@ -7,6 +7,7 @@ package com.anmoyi.web;
 public class UrlConfig {
 
     public static String[] urlAyyy = {
+            "/getAcessionKey",
             "/login",
             "/getCommentList"
     };

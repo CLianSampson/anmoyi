@@ -59,7 +59,7 @@ public class CommentController extends BaseController {
         try {
             packet = JSON.parseObject(requestString, Packet.class);
         } catch (Exception e) {
-            logger.error("评论参数异常\n" + e);
+            logger.error("评论参数异常\n" ,e);
             return responseToClient(AppError.APP_JSON_INVALID_ERROR);
         }
 
