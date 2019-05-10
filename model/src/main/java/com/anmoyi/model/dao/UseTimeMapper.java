@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface UseTimeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +22,7 @@ public interface UseTimeMapper {
 
 
     List<UseTime> getUseTimeList(@Param("userId") int userId, @Param("useTime") Date useTime);
+
+
+    List<Map<String,Object>> getPeriodUseTimeList(@Param("userId") int userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

@@ -3,15 +3,13 @@ package com.anmoyi.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.anmoyi.common.AppError;
 import com.anmoyi.common.Packet;
-import com.anmoyi.common.StringUtil;
 import com.anmoyi.common.TokenUtil;
 import com.anmoyi.common.exception.TokenException;
 import com.anmoyi.model.po.UseTime;
 import com.anmoyi.model.po.User;
-import com.anmoyi.service.CommentService;
 import com.anmoyi.service.UseTimeService;
 import com.anmoyi.service.UserService;
-import com.anmoyi.web.ao.CommentAO;
+import com.anmoyi.web.ao.PeriodUseTimeAO;
 import com.anmoyi.web.ao.UseTimeAO;
 import com.anmoyi.web.ao.UseTimeListAO;
 import org.slf4j.Logger;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UseTimeController extends BaseController {
@@ -90,6 +89,10 @@ public class UseTimeController extends BaseController {
             return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
         }
 
+        //设置返回token
+        this.token = user.getToken();
+
+
 
         UseTime useTime = new UseTime();
 
@@ -102,6 +105,81 @@ public class UseTimeController extends BaseController {
         return responseToClient(AppError.APP_OK);
 
     }
+
+
+
+
+
+
+    /**
+     * 获取一段时间使用次数
+     * @param requestString
+     * @return
+     */
+    @PostMapping(value = "/getPeriodUseTime")
+    public String getPeriodUseTime(@RequestBody String requestString){
+        logger.info("获取一段时间使用次数次数");
+
+
+        Packet packet = null;
+
+        try {
+            packet = JSON.parseObject(requestString, Packet.class);
+        } catch (Exception e) {
+            logger.error("获取一段时间使用次数参数异常\n" + e);
+            return responseToClient(AppError.APP_JSON_INVALID_ERROR);
+        }
+
+
+        PeriodUseTimeAO periodUseTimeAO = null;
+        try {
+            //packet.getData() 为jsonobject
+            periodUseTimeAO = JSON.parseObject(packet.getData().toString(), PeriodUseTimeAO.class);
+        } catch (Exception e) {
+            logger.error("获取一段时间使用次数参数异常",  e);
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
+
+
+        if (null == periodUseTimeAO.getStartTime()){
+            logger.error("获取一段时间使用次数参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
+
+        if (null == periodUseTimeAO.getEndTime()){
+            logger.error("获取一段时间使用次数参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
+        String token = packet.getToken();
+        String phone = null;
+        try {
+            phone = TokenUtil.getEmail(token);
+        } catch (TokenException e) {
+            logger.error("获取一段时间使用次数参数异常",e);
+            return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
+        }
+
+        User user = userService.getByPhone(phone);
+        if (null == user){
+            logger.error("获取一段时间使用次数参数异常");
+            return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
+        }
+
+        //设置返回token
+        this.token = user.getToken();
+
+
+
+        List<Map<String,Object>> returnList = useTimeService.getPeriodUseTimeList(user.getId(),periodUseTimeAO.getStartTime(),periodUseTimeAO.getEndTime());
+
+        return responseToClientWithData(AppError.APP_OK,returnList);
+
+    }
+
+
 
 
 
@@ -157,6 +235,9 @@ public class UseTimeController extends BaseController {
             logger.error("获取当天使用次数参数异常");
             return responseToClient(AppError.APP_TOKEN_INVALID_ERROR);
         }
+
+        //设置返回token
+        this.token = user.getToken();
 
 
         List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(),useTimeListAO.getTime());

@@ -30,15 +30,9 @@ public class Const {
     public static final int AN_MO_YI_ID = 1;  //按摩仪id
 
 
-   
+    public static final String APP_ID = "wxf7921050c476286d";
+    public static final String APP_SECRET = "1b43b589d4204649e7473509fd650da4";
 
-
-
-
-//./configure --prefix=/anmoyi/nginx  --with-http_ssl_module
-//
-//
-//cp nginx /anmoyi/nginx/sbin/
 
 
 }

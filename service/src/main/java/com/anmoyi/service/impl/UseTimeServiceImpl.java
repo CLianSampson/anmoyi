@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UseTimeServiceImpl  implements UseTimeService{
@@ -28,4 +29,15 @@ public class UseTimeServiceImpl  implements UseTimeService{
     public List<UseTime> getUseTimeList(int userId, Date useTime) {
         return useTimeMapper.getUseTimeList(userId,useTime);
     }
+
+
+    @Override
+    public List<Map<String,Object>> getPeriodUseTimeList(int userId, Date startTime, Date endTime) {
+        return useTimeMapper.getPeriodUseTimeList(userId, startTime, endTime);
+
+    }
+
+
+
 }
+

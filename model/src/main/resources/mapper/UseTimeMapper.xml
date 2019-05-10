@@ -89,4 +89,14 @@
     AND TO_DAYS(useTime) = TO_DAYS(#{useTime})
   </select>
 
+
+  <select id="getPeriodUseTimeList" resultType="java.util.HashMap">
+    SELECT
+    DATE_FORMAT(createTime,'%Y-%m-%d') AS time,  COUNT(*) AS count
+    FROM use_time
+    WHERE userId = #{userId}
+    AND createTime BETWEEN #{startTime}  AND   #{endTime}
+    GROUP BY(DATE_FORMAT(createTime,'%Y-%m-%d'))
+  </select>
+
 </mapper>

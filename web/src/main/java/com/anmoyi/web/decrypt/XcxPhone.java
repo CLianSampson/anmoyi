@@ -32,6 +32,19 @@ import javax.crypto.spec.SecretKeySpec;
     4、后台解密
 
  */
+
+
+
+
+//对称密钥
+//
+//        非对称密钥
+//
+//        散列
+//
+//        电子签名
+
+
 public class XcxPhone {
 
     /**
@@ -71,7 +84,6 @@ public class XcxPhone {
         String ivData = "55CepML7rJMM8b21EV2O/A==";
 
         System.out.println(decrypt(sessionKey,ivData,encrypData));
-
     }
 
 
