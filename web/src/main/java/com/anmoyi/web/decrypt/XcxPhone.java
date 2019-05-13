@@ -3,9 +3,12 @@ package com.anmoyi.web.decrypt;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.anmoyi.common.Base64;
+import com.anmoyi.web.ao.LoginAO;
 
 import java.security.spec.AlgorithmParameterSpec;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -70,7 +73,14 @@ public class XcxPhone {
 
 
 
-        return new String(cipher.doFinal(encData),"UTF-8");
+        String jsonStr = new String(cipher.doFinal(encData),"UTF-8");
+
+        Map<String, Object> map = JSON.parseObject(jsonStr, Map.class);
+
+        String phone = (String) map.get("phoneNumber");
+
+
+        return phone;
     }
 
 
@@ -78,14 +88,23 @@ public class XcxPhone {
 
 
     public static void main(String[] args) throws Exception {
-        String  encrypData = "rV1GFoT8RjCTUlEL93AL5np+WWrjt2lrQPAZQhIOGdM75l4i4HmQGEXIBcwfkIUUQNbwCvWKNA/99SWu5eWpSU7E5t/rGm/Qqt7BGEF3xtSvlXhbvRVscqLNRtnJTQLhJz4ZONk+gggi9jrLBFX01IShs8eoITiUdOMRc2J88Jvsz+Ek21tSoB7kkwOe8raYE3PnWYoQz7aiV210y6n1QA==";
-        String sessionKey =  "yNjJc5jQHZmDWFQwSJQYcQ==";
+//        String  encrypData = "rV1GFoT8RjCTUlEL93AL5np+WWrjt2lrQPAZQhIOGdM75l4i4HmQGEXIBcwfkIUUQNbwCvWKNA/99SWu5eWpSU7E5t/rGm/Qqt7BGEF3xtSvlXhbvRVscqLNRtnJTQLhJz4ZONk+gggi9jrLBFX01IShs8eoITiUdOMRc2J88Jvsz+Ek21tSoB7kkwOe8raYE3PnWYoQz7aiV210y6n1QA==";
+//        String sessionKey =  "yNjJc5jQHZmDWFQwSJQYcQ==";
+//
+//        String ivData = "55CepML7rJMM8b21EV2O/A==";
 
-        String ivData = "55CepML7rJMM8b21EV2O/A==";
 
-        System.out.println(decrypt(sessionKey,ivData,encrypData));
+        String  encrypData = "r3pqf4F5zJhACy2rIQcrHz1p1vZP3lKcgyhku5cHhC4Zc3jaPUGOXsPNEF0kYA7kR0OPQvo2tdQoySvAU5R0vCls8FmxG+DYbY5KdYxZ2/HXKCNmJymWRG8PiT3fbd97Mqt9SClE0GFx89z64NWhnF3A5Lu49y70cxmKx1q+WgkkmrcdLAuZNHQLRNvnWHGN0a47lEwc5EFg3pEW9cbmUUPe4t0frXHjDxX40KezMvQtMcvjreRfF2o9kK3TKUeSe0DPwd84sAtX/xhPHKUMsKRwo7hjOQmgetYLs+a5J4i41XWeoOv3ga4qFCw+5gbYkV1NbAsEJrXCpu9QZl/iX7QZrJHglXfKJz0hNANegRNt70i7chUjzoGevCSOXLQ+wiZaLc9fi5kXBL4/9wqRW2hPg1gE2X6eNvsIUh3WXc12bDkG6DfY9hVrwk8reYSUvncmc8MKFPKIakpP2NUQ0GuVusDmXexI49IqjM3iHho=";
+        String  sessionKey =  "Wn0hv5fps/C+1vLI1pxn5Q==";
+        String  ivData = "6dZ6H1PMbrdAn1WudInfSg==";
+
+        String phone = decrypt(sessionKey,ivData,encrypData);
+
+
+
+        System.out.println(phone);
+
     }
-
 
 
 

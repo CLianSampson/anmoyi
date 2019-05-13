@@ -77,6 +77,7 @@ public class AuthFilter implements Filter {
             // 其他请求，需要鉴权
             String tokenStr = request.getHeader("token");
             if (StringUtil.isNullOrBlank(tokenStr)){
+                logger.info("token为空");
                 returnToClient(response, AppError.APP_TOKEN_IS_NULL_ERROR);
                 return;
             }
@@ -95,12 +96,15 @@ public class AuthFilter implements Filter {
             long dif = DateUtil.getMinute(user.getUpdateTime());
             if (dif > Const.USER_LOGIN_INVALID_TIME) {// 单位，分钟
                 //需要用户重新登陆
+                logger.info("token无效，过期");
                 returnToClient(response,AppError.APP_TOKEN_INVALID_ERROR);
                 return;
 
             }
 
+            //使用的用户之前的token ，该token未过期
             if(!user.getToken().equals(tokenStr) ){
+                logger.info("token无效，不正确");
                 returnToClient(response,AppError.APP_TOKEN_INVALID_ERROR);
                 return;
             }

@@ -95,6 +95,14 @@ public class UserController extends BaseController{
         }
 
 
+        logger.info("手机号是: " + phone);
+
+        //如果解密参数传错，则手机号可能为空
+        if (null == phone){
+            logger.error("登陆参数错误");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
         User user = new User();
         user.setAvatarUrl(loginAO.getAvatarUrl());
         user.setBirthDay(loginAO.getBirthDay());
