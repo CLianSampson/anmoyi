@@ -97,7 +97,9 @@
     select
     <include refid="Base_Column_List" />
     from comment
-    where  productId= #{productId}  LIMIT  #{fromSize}, #{toSize}
+    where  productId= #{productId}
+    ORDER BY createTime DESC
+    LIMIT  #{fromSize}, #{toSize}
  </select>
 
 </mapper>
