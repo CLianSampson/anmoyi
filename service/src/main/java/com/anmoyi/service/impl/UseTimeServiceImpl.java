@@ -26,14 +26,14 @@ public class UseTimeServiceImpl  implements UseTimeService{
 
 
     @Override
-    public List<UseTime> getUseTimeList(int userId, Date useTime) {
-        return useTimeMapper.getUseTimeList(userId,useTime);
+    public List<UseTime> getUseTimeList(int userId, int pointType, Date useTime) {
+        return useTimeMapper.getUseTimeList(userId, pointType, useTime);
     }
 
 
     @Override
-    public List<Map<String,Object>> getPeriodUseTimeList(int userId, Date startTime, Date endTime) {
-        return useTimeMapper.getPeriodUseTimeList(userId, startTime, endTime);
+    public List<Map<String,Object>> getPeriodUseTimeList(int userId, int pointType ,Date startTime, Date endTime) {
+        return useTimeMapper.getPeriodUseTimeList(userId, pointType, startTime, endTime);
 
     }
 

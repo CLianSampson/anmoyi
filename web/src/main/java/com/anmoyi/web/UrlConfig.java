@@ -9,7 +9,8 @@ public class UrlConfig {
     public static String[] urlAyyy = {
             "/getAcessionKey",
             "/login",
-            "/getCommentList"
+            "/getCommentList",
+            "/tokenCheck"
     };
 
     public static void main(String[] args) {

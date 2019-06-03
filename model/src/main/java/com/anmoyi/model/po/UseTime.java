@@ -9,6 +9,8 @@ public class UseTime {
 
     private Date useTime;
 
+    private int pointType;
+
     private Date createTime;
 
     public Integer getId() {
@@ -35,11 +37,31 @@ public class UseTime {
         this.useTime = useTime;
     }
 
+
+    public int getPointType() {
+        return pointType;
+    }
+
+    public void setPointType(int pointType) {
+        this.pointType = pointType;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UseTime{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", useTime=" + useTime +
+                ", pointType=" + pointType +
+                ", createTime=" + createTime +
+                '}';
     }
 }

@@ -2,6 +2,7 @@ package com.anmoyi.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.anmoyi.common.AppError;
+import com.anmoyi.common.Const;
 import com.anmoyi.common.Packet;
 import com.anmoyi.common.TokenUtil;
 import com.anmoyi.common.exception.TokenException;
@@ -73,6 +74,19 @@ public class UseTimeController extends BaseController {
         }
 
 
+        /**
+         去掉 大于 9
+        if (useTimeAO.getPointType() < 0 || useTimeAO.getPointType() > 9){
+            logger.error("上报使用时间参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+         */
+
+        if (useTimeAO.getPointType() < 0 ){
+            logger.error("上报使用时间参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
 
         String token = packet.getToken();
         String phone = null;
@@ -98,6 +112,7 @@ public class UseTimeController extends BaseController {
 
         useTime.setUseTime(useTimeAO.getTime());
         useTime.setUserId(user.getId());
+        useTime.setPointType(useTimeAO.getPointType());
         useTime.setCreateTime(new Date());
 
         useTimeService.addUseTime(useTime);
@@ -153,6 +168,13 @@ public class UseTimeController extends BaseController {
             return responseToClient(AppError.APP_ARGS_ERROR);
         }
 
+
+        if (periodUseTimeAO.getPointType() < 0 ){
+            logger.error("上报使用时间参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
+
         String token = packet.getToken();
         String phone = null;
         try {
@@ -173,7 +195,7 @@ public class UseTimeController extends BaseController {
 
 
 
-        List<Map<String,Object>> returnList = useTimeService.getPeriodUseTimeList(user.getId(),periodUseTimeAO.getStartTime(),periodUseTimeAO.getEndTime());
+        List<Map<String,Object>> returnList = useTimeService.getPeriodUseTimeList(user.getId(), periodUseTimeAO.getPointType() ,periodUseTimeAO.getStartTime(),periodUseTimeAO.getEndTime());
 
         return responseToClientWithData(AppError.APP_OK,returnList);
 
@@ -220,6 +242,11 @@ public class UseTimeController extends BaseController {
         }
 
 
+        if (useTimeListAO.getPointType() < 0 ){
+            logger.error("上报使用时间参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
 
         String token = packet.getToken();
         String phone = null;
@@ -240,7 +267,7 @@ public class UseTimeController extends BaseController {
         this.token = user.getToken();
 
 
-        List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(),useTimeListAO.getTime());
+        List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(), useTimeListAO.getPointType() ,useTimeListAO.getTime());
 
         return responseToClientWithData(AppError.APP_OK,returnList);
 

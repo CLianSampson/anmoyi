@@ -5,10 +5,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="useTime" jdbcType="TIMESTAMP" property="useTime" />
+    <result column="pointType" jdbcType="INTEGER" property="pointType" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userId, useTime, createTime
+    id, userId, useTime, pointType, createTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -21,10 +22,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.anmoyi.model.po.UseTime">
-    insert into use_time (id, userId, useTime, 
+    insert into use_time (id, userId, useTime, pointType,
       createTime)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{pointType,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.anmoyi.model.po.UseTime">
     insert into use_time
@@ -37,6 +38,9 @@
       </if>
       <if test="useTime != null">
         useTime,
+      </if>
+      <if test="pointType != null">
+        pointType,
       </if>
       <if test="createTime != null">
         createTime,
@@ -52,6 +56,9 @@
       <if test="useTime != null">
         #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="pointType != null">
+        #{pointType,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -66,6 +73,9 @@
       <if test="useTime != null">
         useTime = #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="pointType != null">
+        pointType = #{pointType,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         createTime = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -76,6 +86,7 @@
     update use_time
     set userId = #{userId,jdbcType=INTEGER},
       useTime = #{useTime,jdbcType=TIMESTAMP},
+      pointType = #{pointType,jdbcType=INTEGER},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -86,6 +97,7 @@
     <include refid="Base_Column_List" />
     from use_time
     where userId = #{userId}
+    AND pointType = #{pointType}
     AND TO_DAYS(useTime) = TO_DAYS(#{useTime})
   </select>
 
@@ -95,6 +107,7 @@
     DATE_FORMAT(createTime,'%Y-%m-%d') AS time,  COUNT(*) AS count
     FROM use_time
     WHERE userId = #{userId}
+    AND pointType = #{pointType}
     AND createTime BETWEEN #{startTime}  AND   #{endTime}
     GROUP BY(DATE_FORMAT(createTime,'%Y-%m-%d'))
   </select>

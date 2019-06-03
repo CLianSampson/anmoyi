@@ -21,8 +21,8 @@ public interface UseTimeMapper {
     int updateByPrimaryKey(UseTime record);
 
 
-    List<UseTime> getUseTimeList(@Param("userId") int userId, @Param("useTime") Date useTime);
+    List<UseTime> getUseTimeList(@Param("userId") int userId, @Param("pointType") int pointType ,@Param("useTime") Date useTime);
 
 
-    List<Map<String,Object>> getPeriodUseTimeList(@Param("userId") int userId, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    List<Map<String,Object>> getPeriodUseTimeList(@Param("userId") int userId, @Param("pointType") int pointType ,@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

@@ -65,12 +65,12 @@
 	<build>
 
 		<plugins>
-			<!--
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			-->
+
 
 
 			<!-- 每次生成之后应立即注释掉，否则maven打包时会再执行 -->

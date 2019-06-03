@@ -17,7 +17,7 @@ public interface UseTimeService {
      * @param useTime
      * @return
      */
-    List<UseTime> getUseTimeList(int userId, Date useTime);
+    List<UseTime> getUseTimeList(int userId,  int pointType, Date useTime);
 
 
     /**
@@ -25,8 +25,9 @@ public interface UseTimeService {
      * @param userId
      * @param startTime
      * @param endTime
+     * @param pointType  穴位类型
      * @return
      */
-    List<Map<String,Object>> getPeriodUseTimeList(int userId, Date startTime, Date endTime);
+    List<Map<String,Object>> getPeriodUseTimeList(int userId,  int pointType ,Date startTime, Date endTime);
 
 }

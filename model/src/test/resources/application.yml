@@ -5,8 +5,8 @@ spring:
       url: jdbc:mysql://127.0.0.1:3306/anmoyi?useUnicode=true&characterEncoding=UTF-8
 
       username: root
-#      password: 1234567
-      password: Anmoyi2019
+      password: 1234567
+#      password: Anmoyi2019
 
 
 
@@ -21,7 +21,7 @@ spring:
       minIdle: 1
       timeBetweenEvictionRunsMillis: 60000
       minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
+      validationQuery: select 1
       testWhileIdle: true
       testOnBorrow: false
       testOnReturn: false
@@ -39,9 +39,7 @@ mybatis:
 
 
 
-#=========== 日志配置·简易（spring boot已经集成logback日志）=========
-logging:
-  config: classpath:logback-spring.xml
+
 
 
 
