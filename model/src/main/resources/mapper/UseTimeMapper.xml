@@ -9,7 +9,7 @@
     <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userId, useTime, pointType, createTime
+    id, userId, useTime, duration, pointType, createTime
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,10 +22,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.anmoyi.model.po.UseTime">
-    insert into use_time (id, userId, useTime, pointType,
+    insert into use_time (id, userId, useTime, duration, pointType,
       createTime)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP}, 
-      #{pointType,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP})
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{useTime,jdbcType=TIMESTAMP},
+      #{duration,jdbcType=INTEGER}, #{pointType,jdbcType=INTEGER},  #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.anmoyi.model.po.UseTime">
     insert into use_time
@@ -38,6 +38,9 @@
       </if>
       <if test="useTime != null">
         useTime,
+      </if>
+      <if test="duration != null">
+        duration,
       </if>
       <if test="pointType != null">
         pointType,
@@ -56,6 +59,9 @@
       <if test="useTime != null">
         #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="duration != null">
+        #{duration,jdbcType=INTEGER},
+      </if>
       <if test="pointType != null">
         #{pointType,jdbcType=INTEGER},
       </if>
@@ -73,6 +79,9 @@
       <if test="useTime != null">
         useTime = #{useTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="userId != null">
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
       <if test="pointType != null">
         pointType = #{pointType,jdbcType=INTEGER},
       </if>
@@ -86,6 +95,7 @@
     update use_time
     set userId = #{userId,jdbcType=INTEGER},
       useTime = #{useTime,jdbcType=TIMESTAMP},
+      duration = #{duration,jdbcType=INTEGER},
       pointType = #{pointType,jdbcType=INTEGER},
       createTime = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

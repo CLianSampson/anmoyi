@@ -88,6 +88,11 @@ public class UseTimeController extends BaseController {
         }
 
 
+        if (useTimeAO.getDuration() < 0 ){
+            logger.error("上报使用时间参数异常");
+            return responseToClient(AppError.APP_ARGS_ERROR);
+        }
+
         String token = packet.getToken();
         String phone = null;
         try {
@@ -111,6 +116,7 @@ public class UseTimeController extends BaseController {
         UseTime useTime = new UseTime();
 
         useTime.setUseTime(useTimeAO.getTime());
+        useTime.setDuration(useTimeAO.getDuration());
         useTime.setUserId(user.getId());
         useTime.setPointType(useTimeAO.getPointType());
         useTime.setCreateTime(new Date());

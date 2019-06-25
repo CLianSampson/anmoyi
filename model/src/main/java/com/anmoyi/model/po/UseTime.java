@@ -9,6 +9,8 @@ public class UseTime {
 
     private Date useTime;
 
+    private Integer duration;
+
     private int pointType;
 
     private Date createTime;
@@ -37,6 +39,14 @@ public class UseTime {
         this.useTime = useTime;
     }
 
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 
     public int getPointType() {
         return pointType;

@@ -8,6 +8,8 @@ public class UseTimeAO {
 
     private int pointType;
 
+    private int duration;
+
     public Date getTime() {
         return time;
     }
@@ -22,5 +24,13 @@ public class UseTimeAO {
 
     public void setPointType(int pointType) {
         this.pointType = pointType;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
