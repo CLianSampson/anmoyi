@@ -6,6 +6,12 @@ public interface UserService {
 
     User getByPhone(String phone);
 
-    void addUser(User user);
+    /**
+     *
+     * @param user
+     * @return  返回是否第一次登陆
+     */
+    boolean addUser(User user);
 
+    void update(User user);
 }

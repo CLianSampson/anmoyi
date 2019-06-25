@@ -7,6 +7,7 @@ import com.anmoyi.model.po.User;
 import com.anmoyi.service.UserService;
 import com.anmoyi.web.ao.LoginAO;
 import com.anmoyi.web.decrypt.XcxPhone;
+import com.anmoyi.web.dto.LoginDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,15 +112,21 @@ public class UserController extends BaseController{
 
         user.setPhone(phone);
 
-        userService.addUser(user);
+        boolean loginFalg = userService.addUser(user);
 
         User returnUser = userService.getByPhone(phone);
+
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setUser(returnUser);
+        loginDTO.setLoginFlag(loginFalg);
+
 
         //改变一下
 
         logger.info("登陆完成");
 
-        return responseToClientWithData(AppError.APP_OK,returnUser);
+        return responseToClientWithData(AppError.APP_OK,loginDTO);
 
     }
 

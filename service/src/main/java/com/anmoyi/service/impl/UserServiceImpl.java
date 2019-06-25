@@ -1,5 +1,6 @@
 package com.anmoyi.service.impl;
 
+import com.anmoyi.common.Const;
 import com.anmoyi.common.TokenUtil;
 import com.anmoyi.model.dao.UserMapper;
 import com.anmoyi.model.po.User;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void addUser(User user) {
+    public boolean addUser(User user) {
         User userInDB = userMapper.getByPhone(user.getPhone());
 
         String token = TokenUtil.getToken(user.getPhone());
@@ -34,17 +35,23 @@ public class UserServiceImpl implements UserService {
             user.setUpdateTime(new Date());
 
             userMapper.insertSelective(user);
+
+            return Const.FIRST_LOGIN_FLAG_TRUE;
         }else {
             user.setUpdateTime(new Date());
 
 
             userMapper.updateByPrimaryKeySelective(user);
+
+            return Const.FIRST_LOGIN_FLAG_FALSE;
+
         }
-
-
-
 
     }
 
 
+    @Override
+    public void update(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
 }

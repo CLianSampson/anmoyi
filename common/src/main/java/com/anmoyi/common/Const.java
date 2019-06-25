@@ -34,5 +34,12 @@ public class Const {
     public static final String APP_SECRET = "1b43b589d4204649e7473509fd650da4";
 
 
+    //是否第一次登陆
+    public static final boolean FIRST_LOGIN_FLAG_TRUE = true;   //是第一次登陆
+    public static final boolean FIRST_LOGIN_FLAG_FALSE = false;  //不是第一次登陆
+
+
+
+
 
 }
