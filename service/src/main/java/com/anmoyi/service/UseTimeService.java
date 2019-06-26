@@ -1,6 +1,7 @@
 package com.anmoyi.service;
 
 import com.anmoyi.model.po.UseTime;
+import com.anmoyi.service.vo.UseTimeVO;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -28,6 +29,6 @@ public interface UseTimeService {
      * @param pointType  穴位类型
      * @return
      */
-    List<Map<String,Object>> getPeriodUseTimeList(int userId,  int pointType ,Date startTime, Date endTime);
+    List<UseTimeVO> getPeriodUseTimeList(int userId, int pointType , Date startTime, Date endTime);
 
 }

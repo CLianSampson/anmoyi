@@ -10,6 +10,7 @@ import com.anmoyi.model.po.UseTime;
 import com.anmoyi.model.po.User;
 import com.anmoyi.service.UseTimeService;
 import com.anmoyi.service.UserService;
+import com.anmoyi.service.vo.UseTimeVO;
 import com.anmoyi.web.ao.PeriodUseTimeAO;
 import com.anmoyi.web.ao.UseTimeAO;
 import com.anmoyi.web.ao.UseTimeListAO;
@@ -201,7 +202,7 @@ public class UseTimeController extends BaseController {
 
 
 
-        List<Map<String,Object>> returnList = useTimeService.getPeriodUseTimeList(user.getId(), periodUseTimeAO.getPointType() ,periodUseTimeAO.getStartTime(),periodUseTimeAO.getEndTime());
+        List<UseTimeVO> returnList = useTimeService.getPeriodUseTimeList(user.getId(), periodUseTimeAO.getPointType() ,periodUseTimeAO.getStartTime(),periodUseTimeAO.getEndTime());
 
         return responseToClientWithData(AppError.APP_OK,returnList);
 

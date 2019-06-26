@@ -112,6 +112,7 @@
   </select>
 
 
+
   <select id="getPeriodUseTimeList" resultType="java.util.HashMap">
     SELECT
     DATE_FORMAT(createTime,'%Y-%m-%d') AS time,  COUNT(*) AS count
@@ -121,5 +122,10 @@
     AND createTime BETWEEN #{startTime}  AND   #{endTime}
     GROUP BY(DATE_FORMAT(createTime,'%Y-%m-%d'))
   </select>
+
+
+
+
+
 
 </mapper>
