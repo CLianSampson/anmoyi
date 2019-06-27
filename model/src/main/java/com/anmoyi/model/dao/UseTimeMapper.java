@@ -28,7 +28,7 @@ public interface UseTimeMapper {
      * @param useTime   当天时间
      * @return
      */
-    List<UseTime> getUseTimeList(@Param("userId") int userId, @Param("pointType") int pointType ,@Param("useTime") Date useTime);
+    List<UseTime> getUseTimeList(@Param("userId") int userId, @Param("pointType") int pointType ,@Param("useTime") String useTime);
 
 
     List<Map<String,Object>> getPeriodUseTimeList(@Param("userId") int userId, @Param("pointType") int pointType ,@Param("startTime") Date startTime, @Param("endTime") Date endTime);

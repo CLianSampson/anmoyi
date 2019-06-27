@@ -274,9 +274,9 @@ public class UseTimeController extends BaseController {
         this.token = user.getToken();
 
 
-        List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(), useTimeListAO.getPointType() ,useTimeListAO.getTime());
+        List<UseTime> returnList = useTimeService.getUseTimeList(user.getId(), useTimeListAO.getPointType() ,useTimeListAO.getTime().toString());
 
-        return responseToClientWithData(AppError.APP_OK,returnList);
+        return responseToClientWithData(AppError.APP_OK,null);
 
     }
 

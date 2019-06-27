@@ -108,19 +108,24 @@
     from use_time
     where userId = #{userId}
     AND pointType = #{pointType}
-    AND TO_DAYS(useTime) = TO_DAYS(#{useTime})
+    AND   (DATE_FORMAT(useTime,'%Y-%m-%d')) =  (DATE_FORMAT(#{useTime},'%Y-%m-%d'))
+
   </select>
+
+  <!--
+  TO_DAYS(useTime) = TO_DAYS(#{useTime})
+  -->
 
 
 
   <select id="getPeriodUseTimeList" resultType="java.util.HashMap">
     SELECT
-    DATE_FORMAT(createTime,'%Y-%m-%d') AS time,  COUNT(*) AS count
+    DATE_FORMAT(useTime,'%Y-%m-%d') AS time,  COUNT(*) AS count
     FROM use_time
     WHERE userId = #{userId}
     AND pointType = #{pointType}
     AND createTime BETWEEN #{startTime}  AND   #{endTime}
-    GROUP BY(DATE_FORMAT(createTime,'%Y-%m-%d'))
+    GROUP BY(DATE_FORMAT(useTime,'%Y-%m-%d'))
   </select>
 
 

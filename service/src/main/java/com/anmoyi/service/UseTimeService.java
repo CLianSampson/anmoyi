@@ -18,7 +18,7 @@ public interface UseTimeService {
      * @param useTime
      * @return
      */
-    List<UseTime> getUseTimeList(int userId,  int pointType, Date useTime);
+    List<UseTime> getUseTimeList(int userId,  int pointType, String useTime);
 
 
     /**

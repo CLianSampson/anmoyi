@@ -26,7 +26,7 @@ public class UseTimeServiceImpl  implements UseTimeService{
 
 
     @Override
-    public List<UseTime> getUseTimeList(int userId, int pointType, Date useTime) {
+    public List<UseTime> getUseTimeList(int userId, int pointType, String useTime) {
         return useTimeMapper.getUseTimeList(userId, pointType, useTime);
     }
 
@@ -50,7 +50,14 @@ public class UseTimeServiceImpl  implements UseTimeService{
 
             Date currentDay = DateUtil.parseYYYYMMDD(currentDayStr);
 
-            List<UseTime> useTimes = useTimeMapper.getUseTimeList(userId, pointType, currentDay);
+            System.out.println("currentDay is : " + currentDay);
+
+            List<UseTime> useTimes = useTimeMapper.getUseTimeList(userId, pointType, currentDayStr);
+
+            System.out.println("userId is : " + userId);
+            System.out.println("pointType is : " + pointType);
+            System.out.println("currentDay is : " + currentDay);
+
 
 
             UseTimeVO useTimeVO = new UseTimeVO();
