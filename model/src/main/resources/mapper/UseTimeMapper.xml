@@ -113,6 +113,10 @@
   </select>
 
   <!--
+   (DATE_FORMAT(useTime,'%Y-%m-%d')) =  (DATE_FORMAT(#{useTime},'%Y-%m-%d'))
+   -->
+
+  <!--
   TO_DAYS(useTime) = TO_DAYS(#{useTime})
   -->
 

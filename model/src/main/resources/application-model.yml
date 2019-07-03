@@ -4,8 +4,8 @@ spring:
       name: yxwl
       url: jdbc:mysql://127.0.0.1:3306/anmoyi?useUnicode=true&characterEncoding=UTF-8
       username: root
-#      password: 12345678
-      password: Anmoyi2019
+      password: 12345678
+#      password: Anmoyi2019
 
 
 
